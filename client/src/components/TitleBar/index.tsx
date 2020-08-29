@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const TitleBar: React.FC = () => {
     return (
         <Container>
-            <h2 className="title">Reffering</h2>
+            <h2>Reffering</h2>
         </Container>
     )
 };

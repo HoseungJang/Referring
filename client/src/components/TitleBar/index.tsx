@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Typography } from "../Typography";
+
 export const TitleBar: React.FC = () => {
     return (
         <Container>
-            <h2>Reffering</h2>
+            <Typography.Title>Reffering</Typography.Title>
         </Container>
     )
 };
@@ -14,6 +16,8 @@ const Container = styled.div`
     top: 0;
     left: 0;
     right: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
     border-bottom: 1px solid grey;
     text-align: center;
     color: #555555;

@@ -9,7 +9,7 @@ export const NotFound: React.FC = () => {
     return (
         <Container>
             <div className="wrap">
-                <Warning style={{ fontSize: 120 }} />
+                <Warning style={{ fontSize: 150 }} />
                 <div className="wrap-msg">
                     <Typography.ErrorMessage>페이지를 찾을 수 없습니다</Typography.ErrorMessage>
                 </div>

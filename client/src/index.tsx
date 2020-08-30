@@ -7,6 +7,7 @@ import { MainRouter } from "./routes";
 
 const GlobalStyle = createGlobalStyle`
     html, body {
+        font-family: sans-serif;
         margin: 0;
         padding: 0;
     }

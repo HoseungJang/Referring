@@ -10,7 +10,7 @@ export const TitleBar: React.FC = () => {
         <>
             {
                 {
-                    desktop: <Desktop/>,
+                    desktop: <Desktop />,
                     mobile: <Mobile />
                 }[useMediaQuery()]
             }

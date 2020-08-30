@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createGlobalStyle } from "styled-components";
 import * as serviceWorker from './serviceWorker';
 
 import { MainRouter } from "./routes";
 
+const GlobalStyle = createGlobalStyle`
+    html, body {
+        margin: 0;
+        padding: 0;
+    }
+`;
+
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-    <MainRouter />,
+    <>
+        <GlobalStyle />
+        <MainRouter />
+    </>,
     rootElement
 );
 

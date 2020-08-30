@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Link } from "react-router-dom";
 import { Typography } from "../../../Desktop/Typography";
 
 export const TitleBar: React.FC = () => {
@@ -8,10 +9,12 @@ export const TitleBar: React.FC = () => {
         <>
             <Padding />
             <Container>
-                <Typography.Title>Reffering</Typography.Title>
+                <Link to="/">
+                    <Typography.Title>Reffering</Typography.Title>
+                </Link>
             </Container>
         </>
-    )
+    );
 };
 
 const Container = styled.div`
@@ -23,8 +26,12 @@ const Container = styled.div`
     padding-bottom: 15px;
     border-bottom: 1px solid grey;
     text-align: center;
-    color: #555555;
     box-shadow: 5px 0 5px grey;
+
+    a {
+        color: #555555;
+        text-decoration: none;
+    }
 `;
 
 const Padding = styled.div`

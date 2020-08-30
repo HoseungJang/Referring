@@ -1,11 +1,11 @@
 import React from "react";
 
-import { Home as Desktop } from "./Desktop";
-import { Home as Mobile } from "./Mobile";
+import { TitleBar as Desktop } from "./Desktop";
+import { TitleBar as Mobile } from "./Mobile";
 
-import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { useMediaQuery } from "../../../hooks/useMediaQuery";
 
-export const Home = () => {
+export const TitleBar: React.FC = () => {
     return (
         <>
             {

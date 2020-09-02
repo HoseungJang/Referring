@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { createGlobalStyle } from "styled-components";
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from "./serviceWorker";
 
 import { MainRouter } from "./routes";
 
@@ -16,11 +16,11 @@ const GlobalStyle = createGlobalStyle`
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-    <>
-        <GlobalStyle />
-        <MainRouter />
-    </>,
-    rootElement
+  <>
+    <GlobalStyle />
+    <MainRouter />
+  </>,
+  rootElement
 );
 
 // If you want your app to work offline and load faster, you can change

@@ -5,15 +5,15 @@ import { NotFound as Mobile } from "./Mobile";
 
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 
-export const NotFound = () => {
-    return (
-        <>
-            {
-                {
-                    desktop: <Desktop />,
-                    mobile: <Mobile />
-                }[useMediaQuery()]
-            }
-        </>
-    )
+export const NotFound: React.FC = () => {
+  return (
+    <>
+      {
+        {
+          desktop: <Desktop />,
+          mobile: <Mobile />,
+        }[useMediaQuery()]
+      }
+    </>
+  );
 };

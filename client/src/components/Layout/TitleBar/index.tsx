@@ -6,14 +6,14 @@ import { TitleBar as Mobile } from "./Mobile";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 
 export const TitleBar: React.FC = () => {
-    return (
-        <>
-            {
-                {
-                    desktop: <Desktop />,
-                    mobile: <Mobile />
-                }[useMediaQuery()]
-            }
-        </>
-    )
+  return (
+    <>
+      {
+        {
+          desktop: <Desktop />,
+          mobile: <Mobile />,
+        }[useMediaQuery()]
+      }
+    </>
+  );
 };

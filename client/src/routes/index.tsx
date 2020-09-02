@@ -6,13 +6,13 @@ import { NotFound } from "../containers/Error";
 import { TitleBar } from "../components/Layout/TitleBar";
 
 export const MainRouter: React.FC = () => {
-    return (
-        <BrowserRouter>
-            <TitleBar />
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route component={NotFound} />
-            </Switch>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <TitleBar />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
+  );
 };

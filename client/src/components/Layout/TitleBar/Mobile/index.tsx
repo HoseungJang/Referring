@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Typography } from "../../../Mobile/Typography";
 
+import { Color } from "../../../../constants/color";
+
 export const TitleBar: React.FC = () => {
     return (
         <>
@@ -24,13 +26,12 @@ const Container = styled.div`
     right: 0;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid ${Color.MainColor};
     text-align: center;
-    color: #555555;
-    box-shadow: 3px 0 3px grey;
+    box-shadow: 0 0 7px ${Color.MainColor};
 
     a {
-        color: #555555;
+        color: ${Color.MainColor};
         text-decoration: none;
     }
 `;

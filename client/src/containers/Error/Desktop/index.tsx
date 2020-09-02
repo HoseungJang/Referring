@@ -5,6 +5,8 @@ import { Warning } from "@material-ui/icons";
 import { Typography } from "../../../components/Desktop/Typography";
 import { Button } from "../../../components/Desktop/Button";
 
+import { Color } from "../../../constants/color";
+
 export const NotFound: React.FC = () => {
     return (
         <Container>
@@ -28,7 +30,7 @@ const Container = styled.div`
         width: 100%;
         height: 100%;
         padding-top: 15%;
-        color: darkgrey;
+        color: ${Color.MainColor};
         display: flex;
         flex-direction: column;
         justify-content: center;

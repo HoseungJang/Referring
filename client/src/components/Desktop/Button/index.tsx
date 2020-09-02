@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
+import { Color } from "../../../constants/color";
+
 export const Button: React.FC<{ path: string }> = (props) => {
     return (
         <Container>
@@ -21,8 +23,8 @@ const Container = styled.div`
 
     a {
         width: 400px;
-        border: 2px solid lightgrey;
-        color: black;
+        border: 2px solid ${Color.ButtonBorder};
+        color: ${Color.MainColor};
         text-decoration: none;
 
         .wrap-text {

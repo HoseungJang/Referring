@@ -1,19 +1,5 @@
 import React from "react";
 
-import { Home as Desktop } from "./Desktop";
-import { Home as Mobile } from "./Mobile";
-
-import { useMediaQuery } from "../../hooks/useMediaQuery";
-
 export const Home: React.FC = () => {
-  return (
-    <>
-      {
-        {
-          desktop: <Desktop />,
-          mobile: <Mobile />,
-        }[useMediaQuery()]
-      }
-    </>
-  );
+  return <div>home</div>;
 };

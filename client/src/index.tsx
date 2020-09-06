@@ -6,11 +6,11 @@ import * as serviceWorker from "./serviceWorker";
 import { MainRouter } from "./routes";
 
 const GlobalStyle = createGlobalStyle`
-    html, body {
-        font-family: sans-serif;
-        margin: 0;
-        padding: 0;
-    }
+  html, body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 const rootElement = document.getElementById("root");

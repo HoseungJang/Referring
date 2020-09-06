@@ -15,6 +15,14 @@ export const Typography = {
     }
   `,
   ErrorMessage: styled.div`
-    font-size: 20px;
+    font-size: 18px;
+
+    @media ${Device.mobile} {
+      font-size: 22px;
+    }
+
+    @media ${Device.desktop} {
+      font-size: 25px;
+    }
   `,
 };

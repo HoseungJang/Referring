@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
     "fp-ts": "^2.8.2",
     "io-ts": "^2.2.10",
     "morgan": "^1.10.0",

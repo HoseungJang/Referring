@@ -2,11 +2,15 @@ import express, { Request, Response, NextFunction, Application } from "express";
 import morgan from "morgan";
 import { Either, tryCatch } from "fp-ts/Either";
 
+import { makeRouter } from "./routers";
+
 const setup = (): Application => {
   const app = express();
 
   app.use(morgan("dev"));
   app.use(express.urlencoded({ extended: true }));
+
+  app.use("/api", makeRouter());
 
   app.use((req: Request, res: Response, next: NextFunction) => {
     return res.status(404).json({

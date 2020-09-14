@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction, Application } from "express";
 import morgan from "morgan";
-import { Either, right } from "fp-ts/Either";
+import { Either, tryCatch } from "fp-ts/Either";
 
-export const buildApp = (): Either<Error, express.Application> => {
+const setup = (): Application => {
   const app = express();
 
   app.use(morgan("dev"));
@@ -20,5 +20,12 @@ export const buildApp = (): Either<Error, express.Application> => {
     });
   });
 
-  return right<Error, Application>(app);
+  return app;
+};
+
+export const buildApp = (): Either<Error, Application> => {
+  return tryCatch(
+    () => setup(),
+    (err: Error) => new Error(err.message)
+  );
 };

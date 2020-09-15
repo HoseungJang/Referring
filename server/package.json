@@ -3,10 +3,10 @@
   "main": "index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "start:watch": "ts-node-dev --watch src/**/*.ts src/index.ts",
+    "start:watch": "ts-node-dev --watch 'src/**/*.ts' src/index.ts",
     "dev": "run-p start:watch format:watch",
-    "format": "prettier --write src/**/*.ts",
-    "format:watch": "onchange src/**/*.ts -- prettier --write {{changed}}"
+    "format": "prettier --write 'src/**/*.ts'",
+    "format:watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}"
   },
   "author": "Alvin Jang <hsjang.dev@gmail.com>",
   "license": "MIT",

@@ -1,10 +1,10 @@
 import express, { Request, Response, NextFunction, Application } from "express";
 import morgan from "morgan";
-import { Either, tryCatch } from "fp-ts/Either";
+import { TaskEither, tryCatch } from "fp-ts/TaskEither";
 
 import { makeRouter } from "./routers";
 
-const setup = (): Application => {
+const setup = async () => {
   const app = express();
 
   app.use(morgan("dev"));
@@ -27,7 +27,7 @@ const setup = (): Application => {
   return app;
 };
 
-export const buildApp = (): Either<Error, Application> => {
+export const buildApp = (): TaskEither<Error, Application> => {
   return tryCatch(
     () => setup(),
     (err: Error) => new Error(err.message)

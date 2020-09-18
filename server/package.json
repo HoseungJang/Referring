@@ -2,9 +2,9 @@
   "name": "reffering-server",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "export NODE_ENV=production && ts-node src/index.ts",
     "start:watch": "ts-node-dev --watch 'src/**/*.ts' src/index.ts",
-    "dev": "run-p start:watch format:watch",
+    "dev": "export NODE_ENV=development && run-p start:watch format:watch",
     "format": "prettier --write 'src/**/*.ts'",
     "format:watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}"
   },

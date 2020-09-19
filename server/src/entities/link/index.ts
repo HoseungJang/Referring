@@ -5,6 +5,6 @@ export class Link {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "varchar", length: 500 })
+  @Column({ type: "varchar", length: 500, nullable: false })
   link: string;
 }

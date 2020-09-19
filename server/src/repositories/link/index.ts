@@ -3,25 +3,25 @@ import { TaskEither, tryCatch } from "fp-ts/TaskEither";
 
 import { Link } from "../../entities/link";
 
-import { getLinkListDTO } from "../../services/link/link.dto";
-
 export const makeLinkRepositories = () => {
   const manager = getManager();
 
-  const getLinkList = ({
-    page,
-    limit,
-  }: getLinkListDTO): TaskEither<Error, Link[]> => {
-    const skip = Number(page) * Number(limit);
-    const take = Number(limit);
+  const createLink = ({ link }): TaskEither<Error, Link> => {
+    return tryCatch(
+      () => manager.getRepository(Link).save({ link }),
+      (err: Error) => err
+    );
+  };
 
+  const getLinkList = ({ skip, take }): TaskEither<Error, Link[]> => {
     return tryCatch(
       () => manager.getRepository(Link).find({ skip, take }),
-      () => new Error("server error")
+      (err: Error) => err
     );
   };
 
   return {
+    createLink,
     getLinkList,
   };
 };

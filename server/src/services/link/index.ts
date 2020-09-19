@@ -1,11 +1,13 @@
 import { TaskEither } from "fp-ts/TaskEither";
+import { DeleteResult } from "typeorm";
 
 import { Link } from "../../entities/link";
 
 import {
-  createLinkDTO,
-  getLinkListDTO,
-  updateLinkDTO,
+  createDTO,
+  getListDTO,
+  removeDTO,
+  updateDTO,
 } from "../../interfaces/link.dto";
 
 import { makeLinkRepositories } from "../../repositories/link";
@@ -13,11 +15,11 @@ import { makeLinkRepositories } from "../../repositories/link";
 export const makeLinkService = () => {
   const repository = makeLinkRepositories();
 
-  const create = (dto: createLinkDTO): TaskEither<Error, Link> => {
+  const create = (dto: createDTO): TaskEither<Error, Link> => {
     return repository.create(dto);
   };
 
-  const getList = (dto: getLinkListDTO): TaskEither<Error, Link[]> => {
+  const getList = (dto: getListDTO): TaskEither<Error, Link[]> => {
     const { page, limit } = dto;
     const skip = Number(page) * Number(limit);
     const take = Number(limit);
@@ -25,13 +27,18 @@ export const makeLinkService = () => {
     return repository.getList({ skip, take });
   };
 
-  const update = (dto: updateLinkDTO): TaskEither<Error, Link> => {
+  const update = (dto: updateDTO): TaskEither<Error, Link> => {
     return repository.update(dto);
+  };
+
+  const remove = (dto: removeDTO): TaskEither<Error, DeleteResult> => {
+    return repository.remove(dto);
   };
 
   return {
     create,
     getList,
     update,
+    remove,
   };
 };

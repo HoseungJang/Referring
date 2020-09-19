@@ -28,9 +28,16 @@ export const makeLinkRequestSchemes = () => {
     }),
   });
 
+  const removeLinkRequestScheme = t.type({
+    path: t.type({ id: t.string }),
+    query: t.type({}),
+    body: t.type({}),
+  });
+
   return {
     createLinkRequestScheme,
     getLinkListRequestScheme,
     updateLinkRequestScheme,
+    removeLinkRequestScheme,
   };
 };

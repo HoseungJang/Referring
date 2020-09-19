@@ -26,7 +26,7 @@ export const makeLinkRouter = (): Router => {
       chain(services.create),
       fold(
         (err) => of(next(err)),
-        (links) => of(res.status(200).json({ result: links }).end())
+        (result) => of(res.status(200).json({ result }).end())
       )
     )();
   };
@@ -43,7 +43,7 @@ export const makeLinkRouter = (): Router => {
       chain(services.getList),
       fold(
         (err) => of(next(err)),
-        (links) => of(res.status(200).json({ result: links }).end())
+        (result) => of(res.status(200).json({ result }).end())
       )
     )();
   };
@@ -60,7 +60,24 @@ export const makeLinkRouter = (): Router => {
       chain(services.update),
       fold(
         (err) => of(next(err)),
-        (links) => of(res.status(200).json({ result: links }).end())
+        (result) => of(res.status(200).json({ result }).end())
+      )
+    )();
+  };
+
+  const remove = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    return pipe(
+      req,
+      validators.removeRequestValidator,
+      fromEither,
+      chain(services.remove),
+      fold(
+        (err) => of(next(err)),
+        (result) => of(res.status(200).json({ result }).end())
       )
     )();
   };
@@ -68,5 +85,6 @@ export const makeLinkRouter = (): Router => {
   return router
     .post("/", asyncHandler(create))
     .get("/list", asyncHandler(getList))
-    .put("/", asyncHandler(update));
+    .put("/", asyncHandler(update))
+    .delete("/:id", asyncHandler(remove));
 };

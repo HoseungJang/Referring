@@ -1,4 +1,4 @@
-import { getManager } from "typeorm";
+import { DeleteResult, getManager } from "typeorm";
 import { TaskEither, tryCatch } from "fp-ts/TaskEither";
 
 import { Link } from "../../entities/link";
@@ -27,9 +27,17 @@ export const makeLinkRepositories = () => {
     );
   };
 
+  const remove = ({ id }): TaskEither<Error, DeleteResult> => {
+    return tryCatch(
+      () => manager.getRepository(Link).delete(id),
+      (err: Error) => err
+    );
+  };
+
   return {
     create,
     getList,
     update,
+    remove,
   };
 };

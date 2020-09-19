@@ -1,3 +1,4 @@
+import { number } from "io-ts";
 import * as t from "io-ts/Type";
 
 export const makeLinkRequestSchemes = () => {
@@ -18,8 +19,18 @@ export const makeLinkRequestSchemes = () => {
     body: t.type({}),
   });
 
+  const updateLinkRequestScheme = t.type({
+    path: t.type({}),
+    query: t.type({}),
+    body: t.type({
+      id: t.number,
+      link: t.string,
+    }),
+  });
+
   return {
     createLinkRequestScheme,
     getLinkListRequestScheme,
+    updateLinkRequestScheme,
   };
 };

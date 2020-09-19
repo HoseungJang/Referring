@@ -2,27 +2,36 @@ import { TaskEither } from "fp-ts/TaskEither";
 
 import { Link } from "../../entities/link";
 
-import { createLinkDTO, getLinkListDTO } from "../../interfaces/link.dto";
+import {
+  createLinkDTO,
+  getLinkListDTO,
+  updateLinkDTO,
+} from "../../interfaces/link.dto";
 
 import { makeLinkRepositories } from "../../repositories/link";
 
 export const makeLinkService = () => {
   const repository = makeLinkRepositories();
 
-  const createLink = (dto: createLinkDTO): TaskEither<Error, Link> => {
-    return repository.createLink(dto);
+  const create = (dto: createLinkDTO): TaskEither<Error, Link> => {
+    return repository.create(dto);
   };
 
-  const getLinkList = (dto: getLinkListDTO): TaskEither<Error, Link[]> => {
+  const getList = (dto: getLinkListDTO): TaskEither<Error, Link[]> => {
     const { page, limit } = dto;
     const skip = Number(page) * Number(limit);
     const take = Number(limit);
 
-    return repository.getLinkList({ skip, take });
+    return repository.getList({ skip, take });
+  };
+
+  const update = (dto: updateLinkDTO): TaskEither<Error, Link> => {
+    return repository.update(dto);
   };
 
   return {
-    createLink,
-    getLinkList,
+    create,
+    getList,
+    update,
   };
 };

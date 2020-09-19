@@ -6,22 +6,30 @@ import { Link } from "../../entities/link";
 export const makeLinkRepositories = () => {
   const manager = getManager();
 
-  const createLink = ({ link }): TaskEither<Error, Link> => {
+  const create = ({ link }): TaskEither<Error, Link> => {
     return tryCatch(
       () => manager.getRepository(Link).save({ link }),
       (err: Error) => err
     );
   };
 
-  const getLinkList = ({ skip, take }): TaskEither<Error, Link[]> => {
+  const getList = ({ skip, take }): TaskEither<Error, Link[]> => {
     return tryCatch(
       () => manager.getRepository(Link).find({ skip, take }),
       (err: Error) => err
     );
   };
 
+  const update = ({ id, link }): TaskEither<Error, Link> => {
+    return tryCatch(
+      () => manager.getRepository(Link).save({ id, link }),
+      (err: Error) => err
+    );
+  };
+
   return {
-    createLink,
-    getLinkList,
+    create,
+    getList,
+    update,
   };
 };

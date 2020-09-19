@@ -1,4 +1,4 @@
-import { Connection, createConnection } from "typeorm";
+import { createConnection } from "typeorm";
 import { TaskEither, tryCatch } from "fp-ts/TaskEither";
 
 export const setConnection = (): TaskEither<Error, void> => {

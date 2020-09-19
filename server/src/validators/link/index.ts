@@ -3,12 +3,16 @@ import { Either, left, right } from "fp-ts/lib/Either";
 
 import { makeLinkRequestSchemes } from "./shemes";
 
-import { createLinkDTO, getLinkListDTO } from "../../interfaces/link.dto";
+import {
+  createLinkDTO,
+  getLinkListDTO,
+  updateLinkDTO,
+} from "../../interfaces/link.dto";
 
 export const makeLinkValidators = () => {
   const schemes = makeLinkRequestSchemes();
 
-  const createLinkRequestValidator = (
+  const createRequestValidator = (
     req: Request
   ): Either<Error, createLinkDTO> => {
     const { params: path, query, body } = req as any;
@@ -19,7 +23,7 @@ export const makeLinkValidators = () => {
       : left(new Error("invalid request"));
   };
 
-  const getLinkRequestValidator = (
+  const getListRequestValidator = (
     req: Request
   ): Either<Error, getLinkListDTO> => {
     const { params: path, query, body } = req as any;
@@ -30,8 +34,20 @@ export const makeLinkValidators = () => {
       : left(new Error("invalid request"));
   };
 
+  const updateRequestValidator = (
+    req: Request
+  ): Either<Error, updateLinkDTO> => {
+    const { params: path, query, body } = req as any;
+    const result = schemes.updateLinkRequestScheme.is({ path, query, body });
+
+    return result
+      ? right(body as updateLinkDTO)
+      : left(new Error("invalid request"));
+  };
+
   return {
-    createLinkRequestValidator,
-    getLinkRequestValidator,
+    createRequestValidator,
+    getListRequestValidator,
+    updateRequestValidator,
   };
 };

@@ -14,16 +14,16 @@ export const makeLinkRouter = (): Router => {
   const services = makeLinkService();
   const validators = makeLinkValidators();
 
-  const createLink = (
+  const create = (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     return pipe(
       req,
-      validators.createLinkRequestValidator,
+      validators.createRequestValidator,
       fromEither,
-      chain(services.createLink),
+      chain(services.create),
       fold(
         (err) => of(next(err)),
         (links) => of(res.status(200).json({ result: links }).end())
@@ -31,16 +31,33 @@ export const makeLinkRouter = (): Router => {
     )();
   };
 
-  const getLinkList = (
+  const getList = (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     return pipe(
       req,
-      validators.getLinkRequestValidator,
+      validators.getListRequestValidator,
       fromEither,
-      chain(services.getLinkList),
+      chain(services.getList),
+      fold(
+        (err) => of(next(err)),
+        (links) => of(res.status(200).json({ result: links }).end())
+      )
+    )();
+  };
+
+  const update = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    return pipe(
+      req,
+      validators.updateRequestValidator,
+      fromEither,
+      chain(services.update),
       fold(
         (err) => of(next(err)),
         (links) => of(res.status(200).json({ result: links }).end())
@@ -49,6 +66,7 @@ export const makeLinkRouter = (): Router => {
   };
 
   return router
-    .post("/", asyncHandler(createLink))
-    .get("/list", asyncHandler(getLinkList));
+    .post("/", asyncHandler(create))
+    .get("/list", asyncHandler(getList))
+    .put("/", asyncHandler(update));
 };

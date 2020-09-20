@@ -5,6 +5,8 @@ import * as serviceWorker from "./serviceWorker";
 
 import { MainRouter } from "./routes";
 
+import { AxiosContextProvider } from "./contexts/axios";
+
 const GlobalStyle = createGlobalStyle`
   html, body {
     font-family: sans-serif;
@@ -18,7 +20,9 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(
   <>
     <GlobalStyle />
-    <MainRouter />
+    <AxiosContextProvider>
+      <MainRouter />
+    </AxiosContextProvider>
   </>,
   rootElement
 );

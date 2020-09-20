@@ -10,7 +10,7 @@ const HomeLoaded: React.FC = () => {
   const list = useApiQuery(
     "getLinkList",
     { page: 0, limit: 10 },
-    { suspense: true }
+    { suspense: true, refetchOnWindowFocus: false }
   );
   console.log(list.data);
 

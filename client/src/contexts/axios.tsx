@@ -6,6 +6,9 @@ const AxiosContext = React.createContext<AxiosInstance | null>(null);
 export const AxiosContextProvider: React.FC = ({ children }) => {
   const client = axios.create({
     baseURL: "http://localhost:3000/api",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
   return (

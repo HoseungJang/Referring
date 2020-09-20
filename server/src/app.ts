@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction, Application } from "express";
 import morgan from "morgan";
+import cors from "cors";
 import { TaskEither, tryCatch } from "fp-ts/TaskEither";
 
 import { makeRouter } from "./routers";
@@ -7,6 +8,7 @@ import { makeRouter } from "./routers";
 const setup = async () => {
   const app = express();
 
+  app.use(cors());
   app.use(morgan("dev"));
   app.use(express.json());
 

@@ -35,7 +35,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "react-scripts start",
-    "format": "onchange 'src/**/*.{ts,tsx,scss}' -- prettier --write {{changed}}",
+    "format": "onchange 'src/**/*.{ts,tsx}' -- prettier --write {{changed}}",
     "eslint": "eslint 'src/**/*.{ts,tsx}' --fix && prettier --write 'src/**/*.{ts,tsx}'"
   },
   "prettier": {

@@ -10,6 +10,10 @@ export const Typography = {
       font-size: 30px;
     }
 
+    @media ${Device.tablet} {
+      font-size: 32px;
+    }
+
     @media ${Device.desktop} {
       font-size: 34px;
     }
@@ -19,6 +23,10 @@ export const Typography = {
 
     @media ${Device.mobile} {
       font-size: 22px;
+    }
+
+    @media ${Device.tablet} {
+      font-size: 24px;
     }
 
     @media ${Device.desktop} {

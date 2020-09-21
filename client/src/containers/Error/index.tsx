@@ -49,6 +49,12 @@ const Container = styled.div`
       }
     }
 
+    @media ${Device.tablet} {
+      .wrap-img {
+        font-size: 130px;
+      }
+    }
+
     @media ${Device.desktop} {
       .wrap-img {
         font-size: 120px;

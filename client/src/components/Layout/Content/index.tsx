@@ -15,6 +15,10 @@ const Container = styled.div`
     top: 61px;
   }
 
+  @media ${Device.tablet} {
+    top: 66px;
+  }
+
   @media ${Device.desktop} {
     top: 72px;
   }

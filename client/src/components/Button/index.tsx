@@ -27,6 +27,10 @@ const Container = styled.div`
       width: 300px;
     }
 
+    @media ${Device.tablet} {
+      width: 350px;
+    }
+
     @media ${Device.desktop} {
       width: 400px;
     }

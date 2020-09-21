@@ -37,6 +37,11 @@ const Container = styled.div`
     padding-bottom: 12px;
   }
 
+  @media ${Device.tablet} {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
   @media ${Device.desktop} {
     padding-top: 15px;
     padding-bottom: 15px;

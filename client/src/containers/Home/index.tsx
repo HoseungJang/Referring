@@ -2,23 +2,25 @@ import React from "react";
 
 import { Spinner } from "../../components/Spinner";
 
-import { useApiQuery } from "../../hooks/useApi";
+import { useInfiniteQueryWithScroll } from "../../hooks/useInfiniteQueryWithScroll";
 
-import { withPlaceholder } from "../../helpers/withPlaceholder";
+export const Home: React.FC = () => {
+  const {
+    data,
+    isFetchingFirst,
+    isFetchingMore,
+    fetchTriggerElement,
+  } = useInfiniteQueryWithScroll("getLinkList", 10);
 
-const HomeLoaded: React.FC = () => {
-  const list = useApiQuery(
-    "getLinkList",
-    { page: 0, limit: 10 },
-    { suspense: true, refetchOnWindowFocus: false }
+  return (
+    <>
+      <div>
+        {data.map((e) => (
+          <div style={{ margin: "10px", height: "100px" }}>{e.link}</div>
+        ))}
+        {!isFetchingFirst && fetchTriggerElement}
+      </div>
+      {isFetchingMore && <Spinner />}
+    </>
   );
-  console.log(list.data);
-
-  return <div>home</div>;
 };
-
-const HomePlaceholder: React.FC = () => {
-  return <Spinner />;
-};
-
-export const Home = withPlaceholder(HomeLoaded, HomePlaceholder);

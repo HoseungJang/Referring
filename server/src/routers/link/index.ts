@@ -43,7 +43,19 @@ export const makeLinkRouter = (): Router => {
       chain(services.getList),
       fold(
         (err) => of(next(err)),
-        (result) => of(res.status(200).json({ result }).end())
+        (result) => {
+          const { page, limit } = req.query as any;
+
+          return of(
+            res
+              .status(200)
+              .json({
+                result,
+                after: result.length < Number(limit) ? null : Number(page) + 1,
+              })
+              .end()
+          );
+        }
       )
     )();
   };

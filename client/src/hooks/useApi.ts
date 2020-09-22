@@ -1,19 +1,19 @@
-import { useQuery, useMutation, QueryConfig } from "react-query";
+import { useInfiniteQuery, useMutation, QueryConfig } from "react-query";
 import { AxiosInstance, AxiosResponse } from "axios";
 
 import { useAxios } from "../contexts/axios";
 
 import { Link, DeleteResult } from "../types";
 
-type QueryOperationId = keyof ReturnType<typeof makeQueryApi>;
-type QueryParametersType<T extends QueryOperationId> = Parameters<
-  ReturnType<typeof makeQueryApi>[T]
+export type PaginatedQueryOperationId = keyof ReturnType<
+  typeof makePaginatedQueryApi
+>;
+type PaginatedQueryParameters<T extends PaginatedQueryOperationId> = Parameters<
+  ReturnType<typeof makePaginatedQueryApi>[T]
 >[0];
-type QueryResponse<T extends QueryOperationId> = ReturnType<
-  ReturnType<typeof makeQueryApi>[T]
-> extends Promise<infer U>
-  ? U
-  : never;
+type PaginatedQueryResponse<T extends PaginatedQueryOperationId> = ReturnType<
+  ReturnType<typeof makePaginatedQueryApi>[T]
+>;
 
 type MutationOperationId = keyof ReturnType<typeof makeMutationApi>;
 type MutationParameters<T extends MutationOperationId> = Parameters<
@@ -21,30 +21,40 @@ type MutationParameters<T extends MutationOperationId> = Parameters<
 >[0];
 type MutationResponse<T extends MutationOperationId> = ReturnType<
   ReturnType<typeof makeMutationApi>[T]
-> extends Promise<infer U>
-  ? U
-  : never;
+>;
 
-export const useApiQuery = <
-  T extends QueryOperationId,
-  P extends QueryParametersType<T>,
-  O extends QueryConfig<AxiosResponse["data"], any>,
-  R extends QueryResponse<T>
+export const useApiPaginatedQuery = <
+  T extends PaginatedQueryOperationId,
+  P extends Omit<PaginatedQueryParameters<T>, "page">,
+  R extends PaginatedQueryResponse<T>
 >(
   operationId: T,
-  params: P,
-  options?: O
+  params: P
 ) => {
   const axios = useAxios();
-  const query = useQuery<R>(
+  const query = useInfiniteQuery<R>(
     operationId,
-    async () => {
-      return (await makeQueryApi(axios)[operationId](params as any)) as any;
+    (_, after: number = 0) => {
+      const request = makePaginatedQueryApi(axios)[operationId]({
+        ...(params as any),
+        page: after,
+      });
+
+      return (request as any).then((response: any) => response);
     },
-    options
+    {
+      getFetchMore: (last) => last.after ?? false,
+    }
   );
 
-  return query;
+  const data: R["result"] = query.data
+    ? query.data.flatMap((e) => (e as any).result)
+    : [];
+
+  return {
+    ...query,
+    data,
+  };
 };
 
 export const useApiMutation = <
@@ -58,8 +68,10 @@ export const useApiMutation = <
   options?: O
 ) => {
   const axios = useAxios();
-  const [mutation, others] = useMutation<R>(async () => {
-    return (await makeMutationApi(axios)[operationId](params as any)) as any;
+  const [mutation, others] = useMutation<R>(() => {
+    const request = makeMutationApi(axios)[operationId](params as any);
+
+    return (request as any).then((response: any) => response);
   }, options);
 
   return {
@@ -68,18 +80,21 @@ export const useApiMutation = <
   };
 };
 
-const makeQueryApi = (axios: AxiosInstance) => {
-  const getLinkList = async (params: { page: number; limit: number }) => {
+const makePaginatedQueryApi = (axios: AxiosInstance) => {
+  const getLinkList = (params: { page: number; limit: number }) => {
     const { page, limit } = params;
 
-    return (
-      await axios.get("/link/list", {
-        params: {
-          page,
-          limit,
-        },
-      })
-    ).data.result as Link[];
+    const request = axios.get("/link/list", {
+      params: {
+        page,
+        limit,
+      },
+    });
+
+    return (request as any).then((response: any) => response.data) as {
+      result: Link[];
+      after: number | null;
+    };
   };
 
   return {
@@ -88,31 +103,34 @@ const makeQueryApi = (axios: AxiosInstance) => {
 };
 
 const makeMutationApi = (axios: AxiosInstance) => {
-  const createLink = async (params: { link: string }) => {
+  const createLink = (params: { link: string }) => {
     const { link } = params;
 
-    return (
-      await axios.post("/link", {
-        link,
-      })
-    ).data.result as Link;
+    const request = axios.post("/link", { link });
+
+    return (request as any).then((response: any) => response.data) as {
+      result: Link;
+    };
   };
 
-  const updateLink = async (params: { id: number; link: string }) => {
+  const updateLink = (params: { id: number; link: string }) => {
     const { id, link } = params;
 
-    return (
-      await axios.put("/link", {
-        id,
-        link,
-      })
-    ).data.result as Link;
+    const request = axios.put("/link", { id, link });
+
+    return (request as any).then((response: any) => response.data) as {
+      result: Link;
+    };
   };
 
-  const removeLink = async (params: { id: number }) => {
+  const removeLink = (params: { id: number }) => {
     const { id } = params;
 
-    return (await axios.delete(`/link/${id}`)).data.result as DeleteResult;
+    const request = axios.delete(`/link/${id}`);
+
+    return (request as any).then((response: any) => response.data) as {
+      result: DeleteResult;
+    };
   };
 
   return {

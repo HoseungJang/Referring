@@ -38,7 +38,7 @@ const Container = styled.div`
     display: block;
     width: 25%;
     height: 25%;
-    background-color: #fff;
+    background-color: #000;
     border-radius: 100%;
     animation: sk-chase-dot-before 2s infinite ease-in-out both;
   }

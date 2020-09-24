@@ -4,12 +4,13 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { Color } from "../../constants/color";
-import { Device } from "../../constants/device";
 
 export const Button: React.FC<{ onClick?: () => void }> = (props) => {
   return (
     <Container onClick={props.onClick}>
-      <div className="wrap-content">{props.children}</div>
+      <button>
+        <div className="wrap-content">{props.children}</div>
+      </button>
     </Container>
   );
 };
@@ -25,19 +26,28 @@ export const LinkButton: React.FC<{ path: string }> = (props) => {
 };
 
 const Container = styled.div`
-  width: 100%;
   display: flex;
-  text-align: center;
+  justify-content: center;
+
+  border: 2px solid ${Color.ButtonBorder};
+
+  > button {
+    width: 100%;
+    background-color: ${Color.White};
+    border: 0;
+    text-decoration: none;
+    outline: none;
+  }
 
   > a {
     width: 100%;
-
-    border: 2px solid ${Color.ButtonBorder};
-    color: ${Color.MainColor};
     text-decoration: none;
   }
 
   .wrap-content {
+    display: flex;
+    justify-content: center;
     padding: 10px;
+    color: ${Color.MainColor};
   }
 `;

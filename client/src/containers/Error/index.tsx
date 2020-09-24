@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Warning } from "@material-ui/icons";
 import { Typography } from "../../components/Typography";
-import { Button } from "../../components/Button";
+import { LinkButton } from "../../components/Button";
 
 import { Color } from "../../constants/color";
 import { Device } from "../../constants/device";
@@ -19,7 +19,7 @@ export const NotFound: React.FC = () => {
           </Typography.ErrorMessage>
         </div>
         <div className="wrap-button">
-          <Button path="/">홈으로 돌아가기</Button>
+          <LinkButton path="/">홈으로 돌아가기</LinkButton>
         </div>
       </div>
     </Container>
@@ -39,23 +39,39 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
 
+    .wrap-button {
+      width: 250px;
+    }
+
     .wrap-img {
       font-size: 130px;
     }
 
     @media ${Device.mobile} {
+      .wrap-button {
+        width: 300px;
+      }
+
       .wrap-img {
         font-size: 150px;
       }
     }
 
     @media ${Device.tablet} {
+      .wrap-button {
+        width: 350px;
+      }
+
       .wrap-img {
         font-size: 130px;
       }
     }
 
     @media ${Device.desktop} {
+      .wrap-button {
+        width: 400px;
+      }
+
       .wrap-img {
         font-size: 120px;
       }

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Spinner } from "../../components/Spinner";
 import { Button } from "../../components/Button";
+import { AddLinkModal } from "../../components/Modal";
 
 import { useInfiniteQueryWithScroll } from "../../hooks/useInfiniteQueryWithScroll";
 
@@ -16,10 +17,15 @@ export const Home: React.FC = () => {
     fetchTriggerElement,
   } = useInfiniteQueryWithScroll("getLinkList", 10);
 
+  const [openAddLinkModal, setOpenAddLinkModal] = useState(false);
+
   return (
     <Container>
+      {openAddLinkModal && (
+        <AddLinkModal onClose={() => setOpenAddLinkModal(false)} />
+      )}
       <div className="buttons">
-        <Button>Add Link</Button>
+        <Button onClick={() => setOpenAddLinkModal(true)}>Add Link</Button>
       </div>
       <div>
         {data.map((e) => (

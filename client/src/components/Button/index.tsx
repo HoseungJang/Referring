@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Color } from "../../constants/color";
 import { Device } from "../../constants/device";
 
-export const Button: React.FC<{ path: string }> = (props) => {
+export const LinkButton: React.FC<{ path: string }> = (props) => {
   return (
     <Container>
       <Link to={props.path}>
@@ -21,19 +21,7 @@ const Container = styled.div`
   text-align: center;
 
   a {
-    width: 250px;
-
-    @media ${Device.mobile} {
-      width: 300px;
-    }
-
-    @media ${Device.tablet} {
-      width: 350px;
-    }
-
-    @media ${Device.desktop} {
-      width: 400px;
-    }
+    width: 100%;
 
     border: 2px solid ${Color.ButtonBorder};
     color: ${Color.MainColor};

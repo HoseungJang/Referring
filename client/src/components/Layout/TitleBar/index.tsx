@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 import { Typography } from "../../Typography";
-import { Button } from "../../Button";
 
 import { Color } from "../../../constants/color";
 import { Device } from "../../../constants/device";
@@ -13,9 +12,6 @@ export const TitleBar: React.FC = () => {
     <>
       <Padding />
       <Container>
-        <div className="link-buttons">
-          <Button>Add Link</Button>
-        </div>
         <Link to="/">
           <Typography.Title>Reffering</Typography.Title>
         </Link>
@@ -29,17 +25,15 @@ const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
+
+  z-index: 1;
+
   border-bottom: 1px solid ${Color.MainColor};
   text-align: center;
   box-shadow: 0 0 10px ${Color.MainColor};
 
   padding-top: 10px;
   padding-bottom: 10px;
-
-  > .link-buttons {
-    position: fixed;
-    left: 5px;
-  }
 
   @media ${Device.mobile} {
     padding-top: 12px;

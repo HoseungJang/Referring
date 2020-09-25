@@ -22,4 +22,8 @@ const Input = styled.input`
   outline: none;
 
   font-size: ${(props: TextFieldProps) => props.fontSize}px;
+
+  ::placeholder {
+    color: ${Color.Placeholder};
+  }
 `;

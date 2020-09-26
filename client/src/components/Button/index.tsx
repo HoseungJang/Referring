@@ -39,7 +39,6 @@ const Container = styled.div`
     width: 100%;
     background-color: ${Color.White};
     border: 0;
-    text-decoration: none;
     outline: none;
   }
 
@@ -52,6 +51,6 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     padding: 10px;
-    color: ${(props) => props.color};
+    color: ${(props) => (props.color ? props.color : Color.MainColor)};
   }
 `;

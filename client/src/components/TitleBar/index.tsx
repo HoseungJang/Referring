@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
-import { Typography } from "../../Typography";
+import { Typography } from "../Typography";
 
-import { Color } from "../../../constants/color";
-import { Device } from "../../../constants/device";
+import { Color } from "../../constants/color";
+import { Device } from "../../constants/device";
 
 export const TitleBar: React.FC = () => {
   return (

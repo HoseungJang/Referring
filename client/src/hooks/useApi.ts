@@ -64,31 +64,25 @@ export const useApiMutation = <
   R extends MutationResponse<T>
 >(
   operationId: T,
-  params: P,
   options?: O
 ) => {
   const axios = useAxios();
-  const [mutation, others] = useMutation<R>(() => {
+  const [mutation, others] = useMutation<R, any, P>((params) => {
     const request = makeMutationApi(axios)[operationId](params as any);
 
     return (request as any).then((response: any) => response);
   }, options);
 
   return {
-    mutation,
+    execute: mutation,
     ...others,
   };
 };
 
 const makePaginatedQueryApi = (axios: AxiosInstance) => {
   const getLinkList = (params: { page: number; limit: number }) => {
-    const { page, limit } = params;
-
     const request = axios.get("/link/list", {
-      params: {
-        page,
-        limit,
-      },
+      params,
     });
 
     return (request as any).then((response: any) => response.data) as {
@@ -103,20 +97,21 @@ const makePaginatedQueryApi = (axios: AxiosInstance) => {
 };
 
 const makeMutationApi = (axios: AxiosInstance) => {
-  const createLink = (params: { link: string }) => {
-    const { link } = params;
-
-    const request = axios.post("/link", { link });
+  const createLink = (params: { name: string; link: string }) => {
+    const request = axios.post("/link", params);
 
     return (request as any).then((response: any) => response.data) as {
       result: Link;
     };
   };
 
-  const updateLink = (params: { id: number; link: string }) => {
-    const { id, link } = params;
-
-    const request = axios.put("/link", { id, link });
+  const updateLink = (params: {
+    id: number;
+    img: string;
+    name: string;
+    link: string;
+  }) => {
+    const request = axios.put("/link", params);
 
     return (request as any).then((response: any) => response.data) as {
       result: Link;

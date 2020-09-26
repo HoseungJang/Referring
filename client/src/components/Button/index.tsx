@@ -5,10 +5,14 @@ import { Link } from "react-router-dom";
 
 import { Color } from "../../constants/color";
 
-export const Button: React.FC<{ onClick?: () => void }> = (props) => {
+export const Button: React.FC<{ disabled?: boolean; onClick?: () => void }> = (
+  props
+) => {
+  const { disabled, onClick } = props;
+
   return (
-    <Container onClick={props.onClick}>
-      <button>
+    <Container color={disabled ? Color.Placeholder : Color.MainColor}>
+      <button onClick={disabled ? undefined : () => onClick!()}>
         <div className="wrap-content">{props.children}</div>
       </button>
     </Container>
@@ -48,6 +52,6 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     padding: 10px;
-    color: ${Color.MainColor};
+    color: ${(props) => props.color};
   }
 `;

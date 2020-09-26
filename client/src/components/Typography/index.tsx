@@ -33,4 +33,19 @@ export const Typography = {
       font-size: 25px;
     }
   `,
+  ModalTitle: styled.div`
+    font-size: 15px;
+
+    @media ${Device.mobile} {
+      font-size: 20px;
+    }
+
+    @media ${Device.tablet} {
+      font-size: 25px;
+    }
+
+    @media ${Device.desktop} {
+      font-size: 30px;
+    }
+  `,
 };

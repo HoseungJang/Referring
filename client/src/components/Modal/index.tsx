@@ -1,15 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Close } from "@material-ui/icons";
 
+import { TextField } from "../TextField";
+
 import { Color } from "../../constants/color";
+import { Typography } from "../Typography";
+import { Device } from "../../constants/device";
+import { Button } from "../Button";
+import { useApiMutation } from "../../hooks/useApi";
 
 type ModalBaseProps = { onClose: () => void };
 
 export const AddLinkModal: React.FC<ModalBaseProps> = (props) => {
+  const [name, setName] = useState<string>("");
+  const [link, setLink] = useState<string>("");
+
+  const createLink = useApiMutation("createLink");
+
   return (
     <ModalBase {...props}>
-      <div style={{ width: "100%", height: "100%" }}>asdfasdf</div>
+      <Containers.AddLinkModal>
+        <div className="title">
+          <Typography.ModalTitle>ADD LINK</Typography.ModalTitle>
+        </div>
+        <div className="body">
+          <TextField
+            placeholder="Name"
+            fontSize={20}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <TextField
+            placeholder="Link"
+            fontSize={20}
+            onChange={(e) => setLink(e.target.value)}
+          />
+        </div>
+        <div className="footer">
+          <Button
+            disabled={(!link || !name) && !createLink.isLoading}
+            onClick={() => createLink.execute({ name, link })}
+          >
+            ADD
+          </Button>
+        </div>
+      </Containers.AddLinkModal>
     </ModalBase>
   );
 };
@@ -53,7 +88,7 @@ const Containers = {
         display: flex;
         justify-content: flex-end;
 
-        padding: 10px;
+        padding: 5px 0 0 0;
 
         > button {
           background-color: inherit;
@@ -64,11 +99,60 @@ const Containers = {
       }
 
       > .modal-content {
-        width: 500px;
-        height: 500px;
-
         padding: 10px;
       }
+    }
+  `,
+  AddLinkModal: styled.div`
+    width: 200px;
+    height: 200px;
+
+    @media ${Device.mobile} {
+      width: 300px;
+      height: 200px;
+    }
+
+    @media ${Device.tablet} {
+      width: 400px;
+      height: 220px;
+    }
+
+    @media ${Device.desktop} {
+      width: 500px;
+      height: 250px;
+    }
+
+    > .title {
+      width: 100%;
+      height: 20%;
+
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    > .body {
+      width: 100%;
+      height: 60%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+
+      > input {
+        height: 50%;
+        margin: 5px 0;
+      }
+    }
+
+    > .footer {
+      width: 100%;
+      height: 20%;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: stretch;
     }
   `,
 };

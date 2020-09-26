@@ -6,7 +6,7 @@ import { Color } from "../../constants/color";
 type TextFieldProps = {
   fontSize?: number;
   placeholder?: string;
-  onChange?: () => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const TextField: React.FC<TextFieldProps> = (props) => {

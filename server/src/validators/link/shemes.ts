@@ -6,6 +6,7 @@ export const makeLinkRequestSchemes = () => {
     path: t.type({}),
     query: t.type({}),
     body: t.type({
+      name: t.string,
       link: t.string,
     }),
   });
@@ -24,6 +25,8 @@ export const makeLinkRequestSchemes = () => {
     query: t.type({}),
     body: t.type({
       id: t.number,
+      img: t.string,
+      name: t.string,
       link: t.string,
     }),
   });

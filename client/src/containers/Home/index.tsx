@@ -4,54 +4,82 @@ import styled from "styled-components";
 import { Spinner } from "../../components/Spinner";
 import { Button } from "../../components/Button";
 import { AddLinkModal } from "../../components/Modal";
+import { LinkCard } from "../../components/LinkCardList";
 
-import { useInfiniteQueryWithScroll } from "../../hooks/useInfiniteQueryWithScroll";
+import { useScreenEffect } from "../../hooks/useScreenEffect";
 
 import { Color } from "../../constants/color";
+import { Device } from "../../constants/device";
 
 export const Home: React.FC = () => {
-  const {
-    data,
-    isFetchingFirst,
-    isFetchingMore,
-    fetchTriggerElement,
-  } = useInfiniteQueryWithScroll("getLinkList", 10);
-
   const [openAddLinkModal, setOpenAddLinkModal] = useState(false);
 
+  const [pageY, setPageY] = useState(0);
+  const [hide, setHide] = useState(false);
+
+  useScreenEffect(() => {
+    const { pageYOffset } = window;
+    const isScrollDown = pageYOffset > pageY;
+
+    if (pageYOffset > 0) {
+      setPageY(pageYOffset);
+      setHide(isScrollDown);
+    }
+  }, [pageY]);
+
   return (
-    <Container>
+    <>
       {openAddLinkModal && (
         <AddLinkModal onClose={() => setOpenAddLinkModal(false)} />
       )}
-      <div className="buttons">
-        <Button onClick={() => setOpenAddLinkModal(true)}>Add Link</Button>
-      </div>
-      <div>
-        {data.map((e) => (
-          <div style={{ margin: "10px", height: "100px" }}>{e.link}</div>
-        ))}
-        {!isFetchingFirst && fetchTriggerElement}
-      </div>
-      {isFetchingMore && <Spinner />}
-    </Container>
+      <Container>
+        <div className="buttons" aria-hidden={hide}>
+          <Button onClick={() => setOpenAddLinkModal(true)}>Add Link</Button>
+        </div>
+        <LinkCard />
+        <LinkCard />
+        <LinkCard />
+        <LinkCard />
+        <LinkCard />
+        <LinkCard />
+        <LinkCard />
+      </Container>
+    </>
   );
 };
 
 const Container = styled.div`
   position: relative;
+  z-index: 0;
 
   > .buttons {
     position: sticky;
-    top: 0;
 
-    z-index: 0;
+    top: 50px;
+
+    @media ${Device.mobile} {
+      top: 61px;
+    }
+
+    @media ${Device.tablet} {
+      top: 67px;
+    }
+
+    @media ${Device.desktop} {
+      top: 72px;
+    }
 
     display: flex;
     flex-direction: row;
 
-    padding: 10px;
+    padding: 10px 0 0;
+    margin: 0 0 10px;
 
-    background-color: ${Color.White};
+    transform: translateY(0);
+    transition: 1s cubic-bezier(0.5, 0.5, 0, 1);
+
+    &[aria-hidden="true"] {
+      transform: translateY(-100%);
+    }
   }
 `;

@@ -28,9 +28,9 @@ const Container = styled.div`
 
   z-index: 1;
 
-  border-bottom: 1px solid ${Color.MainColor};
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+
   text-align: center;
-  box-shadow: 0 0 10px ${Color.MainColor};
 
   padding-top: 10px;
   padding-bottom: 10px;

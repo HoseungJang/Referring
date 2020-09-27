@@ -48,4 +48,19 @@ export const Typography = {
       font-size: 30px;
     }
   `,
+  LinkTitle: styled.div`
+    font-size: 30px;
+
+    @media ${Device.mobile} {
+      font-size: 20px;
+    }
+
+    @media ${Device.tablet} {
+      font-size: 30px;
+    }
+
+    @media ${Device.desktop} {
+      font-size: 35px;
+    }
+  `,
 };

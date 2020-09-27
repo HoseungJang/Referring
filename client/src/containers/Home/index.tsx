@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { Spinner } from "../../components/Spinner";
 import { Button } from "../../components/Button";
 import { AddLinkModal } from "../../components/Modal";
-import { LinkCard } from "../../components/LinkCardList";
+import { LinkCardList } from "../../components/LinkCardList";
 
 import { useScreenEffect } from "../../hooks/useScreenEffect";
 
-import { Color } from "../../constants/color";
 import { Device } from "../../constants/device";
 
 export const Home: React.FC = () => {
@@ -36,13 +34,7 @@ export const Home: React.FC = () => {
         <div className="buttons" aria-hidden={hide}>
           <Button onClick={() => setOpenAddLinkModal(true)}>Add Link</Button>
         </div>
-        <LinkCard />
-        <LinkCard />
-        <LinkCard />
-        <LinkCard />
-        <LinkCard />
-        <LinkCard />
-        <LinkCard />
+        <LinkCardList />
       </Container>
     </>
   );
@@ -54,6 +46,7 @@ const Container = styled.div`
 
   > .buttons {
     position: sticky;
+    z-index: 1;
 
     top: 50px;
 
@@ -72,8 +65,8 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
 
-    padding: 10px 0 0;
-    margin: 0 0 10px;
+    padding-top: 10px;
+    margin: 0 10px;
 
     transform: translateY(0);
     transition: 1s cubic-bezier(0.5, 0.5, 0, 1);

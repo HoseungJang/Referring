@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import isURL from "validator/lib/isURL";
 import { Close } from "@material-ui/icons";
 
 import { TextField } from "../TextField";
@@ -39,7 +40,19 @@ export const AddLinkModal: React.FC<ModalBaseProps> = (props) => {
         <div className="footer">
           <Button
             disabled={(!link || !name) && !createLink.isLoading}
-            onClick={() => createLink.execute({ name, link })}
+            onClick={() => {
+              if (
+                isURL(link, {
+                  protocols: ["https", "http"],
+                  require_protocol: true,
+                })
+              ) {
+                createLink.execute({ name, link });
+                props.onClose();
+              } else {
+                alert("유효한 URL을 입력하세요.");
+              }
+            }}
           >
             ADD
           </Button>

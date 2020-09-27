@@ -5,6 +5,7 @@ import isURL from "validator/lib/isURL";
 import { Close } from "@material-ui/icons";
 
 import { TextField } from "../TextField";
+import { Spinner } from "../Spinner";
 
 import { Color } from "../../constants/color";
 import { Typography } from "../Typography";
@@ -12,18 +13,22 @@ import { Device } from "../../constants/device";
 import { Button } from "../Button";
 import { useApiMutation } from "../../hooks/useApi";
 
-type ModalBaseProps = { onClose: () => void };
+type ModalBaseProps = { disableClose?: boolean; onClose: () => void };
 
 export const AddLinkModal: React.FC<ModalBaseProps> = (props) => {
   const [name, setName] = useState<string>("");
   const [link, setLink] = useState<string>("");
 
   const createLink = useApiMutation("createLink", {
-    onSuccess: () => queryCache.refetchQueries(["getLinkList"]),
+    onSuccess: () => {
+      queryCache.refetchQueries(["getLinkList"]);
+      props.onClose();
+    },
+    onError: () => alert("server error"),
   });
 
   return (
-    <ModalBase {...props}>
+    <ModalBase disableClose={createLink.isLoading} {...props}>
       <Containers.AddLinkModal>
         <div className="title">
           <Typography.ModalTitle>ADD LINK</Typography.ModalTitle>
@@ -51,13 +56,12 @@ export const AddLinkModal: React.FC<ModalBaseProps> = (props) => {
                 })
               ) {
                 createLink.execute({ name, link });
-                props.onClose();
               } else {
                 alert("유효한 URL을 입력하세요.");
               }
             }}
           >
-            ADD
+            {createLink.isLoading ? <Spinner /> : "ADD"}
           </Button>
         </div>
       </Containers.AddLinkModal>
@@ -65,13 +69,21 @@ export const AddLinkModal: React.FC<ModalBaseProps> = (props) => {
   );
 };
 
-const ModalBase: React.FC<ModalBaseProps> = ({ onClose, children }) => {
+const ModalBase: React.FC<ModalBaseProps> = ({
+  disableClose,
+  onClose,
+  children,
+}) => {
   return (
     <Containers.ModalBase onClick={() => onClose()}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <button onClick={() => onClose()}>
-            <Close />
+          <button disabled={disableClose} onClick={() => onClose()}>
+            <Close
+              style={{
+                color: disableClose ? Color.Placeholder : Color.MainColor,
+              }}
+            />
           </button>
         </div>
         <div className="modal-content">{children}</div>
@@ -169,6 +181,10 @@ const Containers = {
       flex-direction: column;
 
       align-items: stretch;
+
+      > * {
+        height: 100%;
+      }
     }
   `,
 };

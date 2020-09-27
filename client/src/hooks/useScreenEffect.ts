@@ -7,5 +7,6 @@ export const useScreenEffect = (listener: () => void, deps: any[]) => {
     return () => {
       window.removeEventListener("scroll", listener);
     };
-  }, [...deps, listener]);
+    // eslint-disable-next-line
+  }, deps);
 };

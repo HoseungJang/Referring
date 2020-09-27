@@ -4,25 +4,21 @@ import styled from "styled-components";
 export const Spinner: React.FC = () => {
   return (
     <Container>
-      <div className="sk-chase">
-        <div className="sk-chase-dot"></div>
-        <div className="sk-chase-dot"></div>
-        <div className="sk-chase-dot"></div>
-        <div className="sk-chase-dot"></div>
-        <div className="sk-chase-dot"></div>
-        <div className="sk-chase-dot"></div>
-      </div>
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
     </Container>
   );
 };
 
 const Container = styled.div`
-  .sk-chase {
-    width: 40px;
-    height: 40px;
-    position: relative;
-    animation: sk-chase 2.5s infinite linear both;
-  }
+  width: 1em;
+  height: 1em;
+  position: relative;
+  animation: sk-chase 2.5s infinite linear both;
 
   .sk-chase-dot {
     width: 100%;

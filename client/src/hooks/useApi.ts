@@ -97,7 +97,7 @@ const makePaginatedQueryApi = (axios: AxiosInstance) => {
 };
 
 const makeMutationApi = (axios: AxiosInstance) => {
-  const createLink = (params: { name: string; link: string }) => {
+  const createLink = (params: Pick<Link, "name" | "link">) => {
     const request = axios.post("/link", params);
 
     return (request as any).then((response: any) => response.data) as {
@@ -105,12 +105,7 @@ const makeMutationApi = (axios: AxiosInstance) => {
     };
   };
 
-  const updateLink = (params: {
-    id: number;
-    img: string;
-    name: string;
-    link: string;
-  }) => {
+  const updateLink = (params: Link) => {
     const request = axios.put("/link", params);
 
     return (request as any).then((response: any) => response.data) as {
@@ -118,7 +113,7 @@ const makeMutationApi = (axios: AxiosInstance) => {
     };
   };
 
-  const removeLink = (params: { id: number }) => {
+  const removeLink = (params: Pick<Link, "id">) => {
     const { id } = params;
 
     const request = axios.delete(`/link/${id}`);

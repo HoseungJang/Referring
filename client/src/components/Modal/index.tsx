@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { queryCache } from "react-query";
 import isURL from "validator/lib/isURL";
 import { Close } from "@material-ui/icons";
 
@@ -17,7 +18,9 @@ export const AddLinkModal: React.FC<ModalBaseProps> = (props) => {
   const [name, setName] = useState<string>("");
   const [link, setLink] = useState<string>("");
 
-  const createLink = useApiMutation("createLink");
+  const createLink = useApiMutation("createLink", {
+    onSuccess: () => queryCache.refetchQueries(["getLinkList"]),
+  });
 
   return (
     <ModalBase {...props}>

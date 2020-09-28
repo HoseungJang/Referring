@@ -12,7 +12,7 @@ export const Button: React.FC<{ disabled?: boolean; onClick?: () => void }> = (
 
   return (
     <Container color={disabled ? Color.Placeholder : Color.MainColor}>
-      <button onClick={disabled ? undefined : () => onClick!()}>
+      <button onClick={disabled ? undefined : () => onClick?.()}>
         <div className="wrap-content">{props.children}</div>
       </button>
     </Container>

@@ -33,6 +33,7 @@ export const Home: React.FC = () => {
       <Container>
         <div className="buttons" aria-hidden={hide}>
           <Button onClick={() => setOpenAddLinkModal(true)}>Add Link</Button>
+          <Button>Delete Link</Button>
         </div>
         <LinkCardList />
       </Container>

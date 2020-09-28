@@ -44,6 +44,16 @@ const Container = styled.div`
   position: relative;
   z-index: 0;
 
+  padding: 0;
+
+  @media ${Device.tablet} {
+    padding: 0 30px;
+  }
+
+  @media ${Device.desktop} {
+    padding: 0 50px;
+  }
+
   > .buttons {
     position: sticky;
     z-index: 1;
@@ -73,6 +83,10 @@ const Container = styled.div`
 
     &[aria-hidden="true"] {
       transform: translateY(-100%);
+    }
+
+    > * {
+      margin-right: 8px;
     }
   }
 `;

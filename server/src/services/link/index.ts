@@ -28,7 +28,10 @@ export const makeLinkService = () => {
         (err: Error) => left(err),
         ({ result }) =>
           result.success
-            ? repository.create({ img: result.ogImage.url, ...dto })
+            ? repository.create({
+                img: result.ogImage ? result.ogImage.url : null,
+                ...dto,
+              })
             : left(new Error("invalid link"))
       )
     );

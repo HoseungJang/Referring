@@ -26,7 +26,7 @@ const Container = styled.div`
   left: 0;
   right: 0;
 
-  z-index: 1;
+  z-index: 2;
 
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 

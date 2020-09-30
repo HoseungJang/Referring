@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import { TitleBar } from "../../components/TitleBar";
 import { Button } from "../../components/Button";
 import { AddLinkModal } from "../../components/Modal";
 import { LinkCardList } from "../../components/LinkCardList";
@@ -27,13 +28,13 @@ export const Home: React.FC = () => {
 
   return (
     <>
-      {openAddLinkModal && (
-        <AddLinkModal onClose={() => setOpenAddLinkModal(false)} />
-      )}
       <Container>
+        <TitleBar />
+        {openAddLinkModal && (
+          <AddLinkModal onClose={() => setOpenAddLinkModal(false)} />
+        )}
         <div className="buttons" aria-hidden={hide}>
           <Button onClick={() => setOpenAddLinkModal(true)}>Add Link</Button>
-          <Button>Delete Link</Button>
         </div>
         <LinkCardList />
       </Container>

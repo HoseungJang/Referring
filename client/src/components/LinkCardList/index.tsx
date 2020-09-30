@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { Edit } from "@material-ui/icons";
 
 import { Color } from "../../constants/color";
 import { Typography } from "../Typography";
+import { UpdateLinkModal } from "../Modal";
 
 import { useInfiniteQueryWithScroll } from "../../hooks/useInfiniteQueryWithScroll";
+
 import { Device } from "../../constants/device";
+import { Link } from "../../types";
 
 export const LinkCardList: React.FC = () => {
   const {
@@ -18,31 +22,50 @@ export const LinkCardList: React.FC = () => {
   return (
     <Containers.LinkCardList>
       {data.map((e, i) => (
-        <LinkCard key={i} img={e.img} name={e.name} link={e.link} />
+        <LinkCard key={i} {...e} />
       ))}
       {!isFetchingFirst && !isFetchingMore && fetchTriggerElement}
     </Containers.LinkCardList>
   );
 };
 
-export const LinkCard: React.FC<{
-  img: string;
-  name: string;
-  link: string;
-}> = (props) => {
-  const { img, name, link } = props;
+export const LinkCard: React.FC<Link> = (props) => {
+  const { id, img, name, link } = props;
+
+  const [openUpdateLinkModal, setOpenUpdateLinkModal] = useState(false);
 
   return (
-    <Containers.LinkCardWrap>
-      <Containers.LinkCard onClick={() => (window.location.href = link)}>
-        <div className="og-img">
-          <img src={img} alt="" />
+    <>
+      {openUpdateLinkModal && (
+        <UpdateLinkModal
+          id={id}
+          name={name}
+          link={link}
+          onClose={() => setOpenUpdateLinkModal(false)}
+        />
+      )}
+      <Containers.LinkCardWrap>
+        <div
+          className="link-card"
+          onClick={() => (window.location.href = link)}
+        >
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpenUpdateLinkModal(true);
+            }}
+          >
+            <Edit />
+          </button>
+          <div className="og-img">
+            <img src={img} alt="" />
+          </div>
+          <div className="title">
+            <Typography.LinkTitle>{name}</Typography.LinkTitle>
+          </div>
         </div>
-        <div className="title">
-          <Typography.LinkTitle>{name}</Typography.LinkTitle>
-        </div>
-      </Containers.LinkCard>
-    </Containers.LinkCardWrap>
+      </Containers.LinkCardWrap>
+    </>
   );
 };
 
@@ -69,50 +92,75 @@ const Containers = {
     padding: 10px;
 
     box-sizing: border-box;
-  `,
-  LinkCard: styled.div`
-    position: relative;
-    z-index: 0;
 
-    width: 100%;
-    height: 100%;
+    > .link-card {
+      position: relative;
+      z-index: 0;
 
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
-    background-color: ${Color.White};
-
-    &:hover {
-      transition: transform 0.5s;
-      transform: scale(1.07);
-    }
-
-    > .og-img {
       width: 100%;
-      height: 80%;
+      height: 100%;
 
-      > img {
-        width: 100%;
-        height: 100%;
+      background-color: ${Color.White};
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
 
-        object-fit: contain;
+      > button {
+        display: none;
+
+        position: absolute;
+
+        top: 10px;
+        right: 10px;
+
+        background-color: ${Color.White};
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+
+        border: 0;
+        border-radius: 1px;
+
+        outline: none;
       }
-    }
 
-    > .title {
-      width: 100%;
-      height: 20%;
+      &:hover {
+        transition: transform 0.5s;
+        transform: scale(1.07);
 
-      padding: 0 10px;
+        > button {
+          display: flex;
+        }
+      }
 
-      display: flex;
-      justify-content: center;
-      align-itmes: center;
+      > .og-img {
+        width: 100%;
+        height: 80%;
 
-      box-sizing: border-box;
+        > img {
+          width: 100%;
+          height: 100%;
 
-      > div {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+          object-fit: contain;
+        }
+      }
+
+      > .title {
+        position: relative;
+
+        width: 100%;
+        height: 20%;
+
+        padding: 0 10px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        box-sizing: border-box;
+
+        > div {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
       }
     }
   `,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { queryCache } from "react-query";
 import isURL from "validator/lib/isURL";
@@ -12,6 +12,8 @@ import { Typography } from "../Typography";
 import { Device } from "../../constants/device";
 import { Button } from "../Button";
 import { useApiMutation } from "../../hooks/useApi";
+
+import { Link } from "../../types";
 
 type ModalBaseProps = { disableClose?: boolean; onClose: () => void };
 
@@ -29,7 +31,7 @@ export const AddLinkModal: React.FC<ModalBaseProps> = (props) => {
 
   return (
     <ModalBase disableClose={createLink.isLoading} {...props}>
-      <Containers.AddLinkModal>
+      <Containers.LinkModal>
         <div className="title">
           <Typography.ModalTitle>ADD LINK</Typography.ModalTitle>
         </div>
@@ -47,24 +49,77 @@ export const AddLinkModal: React.FC<ModalBaseProps> = (props) => {
         </div>
         <div className="footer">
           <Button
-            disabled={(!link || !name) && !createLink.isLoading}
-            onClick={() => {
-              if (
-                isURL(link, {
-                  protocols: ["https", "http"],
-                  require_protocol: true,
-                })
-              ) {
-                createLink.execute({ name, link });
-              } else {
-                alert("유효한 URL을 입력하세요.");
-              }
-            }}
+            disabled={(!name || !link) && !createLink.isLoading}
+            onClick={() =>
+              isURL(link, {
+                protocols: ["https", "http"],
+                require_protocol: true,
+              })
+                ? createLink.execute({ name, link })
+                : alert("유효한 주소를 입력하세요.")
+            }
           >
             {createLink.isLoading ? <Spinner /> : "ADD"}
           </Button>
         </div>
-      </Containers.AddLinkModal>
+      </Containers.LinkModal>
+    </ModalBase>
+  );
+};
+
+export const UpdateLinkModal: React.FC<Omit<Link, "img"> & ModalBaseProps> = ({
+  id,
+  name,
+  link,
+  ...props
+}) => {
+  const [newName, setNewName] = useState<string>(name);
+  const [newLink, setNewLink] = useState<string>(link);
+
+  const updateLink = useApiMutation("updateLink", {
+    onSuccess: () => {
+      queryCache.refetchQueries(["getLinkList"]);
+      props.onClose();
+    },
+    onError: () => alert("server error"),
+  });
+
+  return (
+    <ModalBase disableClose={updateLink.isLoading} {...props}>
+      <Containers.LinkModal>
+        <div className="title">
+          <Typography.ModalTitle>UPDATE LINK</Typography.ModalTitle>
+        </div>
+        <div className="body">
+          <TextField
+            placeholder="Name"
+            fontSize={20}
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+          />
+          <TextField
+            placeholder="Link"
+            fontSize={20}
+            value={newLink}
+            onChange={(e) => setNewLink(e.target.value)}
+          />
+        </div>
+        <div className="footer">
+          <Button
+            disabled={(!newName || !newLink) && !updateLink.isLoading}
+            onClick={() =>
+              isURL(newLink, {
+                protocols: ["https", "http"],
+                require_protocol: true,
+              })
+                ? updateLink.execute({ id, name: newName, link: newLink })
+                : alert("유효한 주소를 입력하세요.")
+            }
+          >
+            {updateLink.isLoading ? <Spinner /> : "UPDATE"}
+          </Button>
+        </div>
+      </Containers.LinkModal>
     </ModalBase>
   );
 };
@@ -102,11 +157,10 @@ const Containers = {
     justify-content: center;
 
     position: fixed;
-    z-index: 2;
+    z-index: 3;
     left: 0;
     top: 0;
 
-    background-color: rgb(0, 0, 0); /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
 
     > .modal {
@@ -131,7 +185,7 @@ const Containers = {
       }
     }
   `,
-  AddLinkModal: styled.div`
+  LinkModal: styled.div`
     width: 200px;
     height: 200px;
 

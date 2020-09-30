@@ -105,7 +105,7 @@ const makeMutationApi = (axios: AxiosInstance) => {
     };
   };
 
-  const updateLink = (params: Link) => {
+  const updateLink = (params: Omit<Link, "img">) => {
     const request = axios.put("/link", params);
 
     return (request as any).then((response: any) => response.data) as {

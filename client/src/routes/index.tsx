@@ -8,7 +8,6 @@ import { TitleBar } from "../components/TitleBar";
 export const MainRouter: React.FC = () => {
   return (
     <BrowserRouter>
-      <TitleBar />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route component={NotFound} />

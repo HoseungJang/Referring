@@ -22,7 +22,7 @@ export const makeLinkService = () => {
     return pipe(
       tryCatch(
         () => ogs({ url: dto.link }),
-        (err: ErrorResult) => new Error("invalid link")
+        () => new Error("invalid link")
       ),
       fold(
         (err: Error) => left(err),
@@ -49,7 +49,7 @@ export const makeLinkService = () => {
     return pipe(
       tryCatch(
         () => ogs({ url: dto.link }),
-        (err: ErrorResult) => new Error("invalid link")
+        () => new Error("invalid link")
       ),
       fold(
         (err: Error) => left(err),

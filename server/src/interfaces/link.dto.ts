@@ -10,7 +10,6 @@ export interface getListDTO {
 
 export interface updateDTO {
   id: number;
-  img: string;
   name: string;
   link: string;
 }

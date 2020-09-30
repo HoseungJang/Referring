@@ -25,7 +25,6 @@ export const makeLinkRequestSchemes = () => {
     query: t.type({}),
     body: t.type({
       id: t.number,
-      img: t.string,
       name: t.string,
       link: t.string,
     }),

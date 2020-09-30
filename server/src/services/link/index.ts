@@ -46,7 +46,22 @@ export const makeLinkService = () => {
   };
 
   const update = (dto: updateDTO): TaskEither<Error, Link> => {
-    return repository.update(dto);
+    return pipe(
+      tryCatch(
+        () => ogs({ url: dto.link }),
+        (err: ErrorResult) => new Error("invalid link")
+      ),
+      fold(
+        (err: Error) => left(err),
+        ({ result }) =>
+          result.success
+            ? repository.update({
+                img: result.ogImage ? result.ogImage.url : null,
+                ...dto,
+              })
+            : left(new Error("invalid link"))
+      )
+    );
   };
 
   const remove = (dto: removeDTO): TaskEither<Error, DeleteResult> => {

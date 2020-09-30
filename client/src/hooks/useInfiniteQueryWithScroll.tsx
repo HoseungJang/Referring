@@ -13,7 +13,6 @@ export const useInfiniteQueryWithScroll = (
 
   useEffect(() => {
     if (inView && !query.isFetchingMore && query.canFetchMore) {
-      console.log("adsfs");
       query.fetchMore();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

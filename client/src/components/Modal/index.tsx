@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { queryCache } from "react-query";
 import isURL from "validator/lib/isURL";
@@ -84,6 +84,14 @@ export const UpdateLinkModal: React.FC<Omit<Link, "img"> & ModalBaseProps> = ({
     onError: () => alert("server error"),
   });
 
+  const removeLink = useApiMutation("removeLink", {
+    onSuccess: () => {
+      queryCache.refetchQueries(["getLinkList"]);
+      props.onClose();
+    },
+    onError: () => alert("server error"),
+  });
+
   return (
     <ModalBase disableClose={updateLink.isLoading} {...props}>
       <Containers.LinkModal>
@@ -117,6 +125,14 @@ export const UpdateLinkModal: React.FC<Omit<Link, "img"> & ModalBaseProps> = ({
             }
           >
             {updateLink.isLoading ? <Spinner /> : "UPDATE"}
+          </Button>
+          <Button
+            disabled={removeLink.isLoading}
+            onClick={() =>
+              window.confirm("삭제하시겠습니까?") && removeLink.execute({ id })
+            }
+          >
+            {removeLink.isLoading ? <Spinner /> : "DELETE"}
           </Button>
         </div>
       </Containers.LinkModal>
@@ -232,11 +248,9 @@ const Containers = {
       height: 20%;
 
       display: flex;
-      flex-direction: column;
-
-      align-items: stretch;
 
       > * {
+        width: 100%;
         height: 100%;
       }
     }

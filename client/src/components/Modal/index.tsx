@@ -152,7 +152,7 @@ const ModalBase: React.FC<ModalBaseProps> = ({
           <button disabled={disableClose} onClick={() => onClose()}>
             <Close
               style={{
-                color: disableClose ? Color.Placeholder : Color.MainColor,
+                color: disableClose ? Color.Grey4 : Color.Grey1,
               }}
             />
           </button>

@@ -33,7 +33,7 @@ const Container = styled.div`
   .wrap {
     width: 100%;
     height: 100%;
-    color: ${Color.MainColor};
+    color: ${Color.Grey1};
     display: flex;
     flex-direction: column;
     justify-content: center;

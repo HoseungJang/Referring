@@ -15,7 +15,7 @@ export const TextField: React.FC<TextFieldProps> = (props) => {
 };
 
 const Input = styled.input`
-  border: 1px solid ${Color.TextFieldBorder};
+  border: 1px solid ${Color.Grey3};
   border-radius: 0;
 
   padding: 2%;
@@ -25,6 +25,6 @@ const Input = styled.input`
   font-size: ${(props: TextFieldProps) => props.fontSize}px;
 
   ::placeholder {
-    color: ${Color.Placeholder};
+    color: ${Color.Grey4};
   }
 `;

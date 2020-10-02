@@ -53,7 +53,7 @@ const Container = styled.div`
   }
 
   a {
-    color: ${Color.MainColor};
+    color: ${Color.Grey1};
     text-decoration: none;
   }
 `;

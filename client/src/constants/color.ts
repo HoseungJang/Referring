@@ -1,7 +1,7 @@
 export const Color = {
   White: "#FFFFFF",
-  MainColor: "#555555",
-  ButtonBorder: "#D8D8D8",
-  TextFieldBorder: "#E6E6E6",
-  Placeholder: "#BDBDBD",
+  Grey1: "#555555",
+  Grey2: "#D8D8D8",
+  Grey3: "#E6E6E6",
+  Grey4: "#BDBDBD",
 };

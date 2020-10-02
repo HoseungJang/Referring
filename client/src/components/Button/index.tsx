@@ -11,7 +11,7 @@ export const Button: React.FC<{ disabled?: boolean; onClick?: () => void }> = (
   const { disabled, onClick } = props;
 
   return (
-    <Container color={disabled ? Color.Placeholder : Color.MainColor}>
+    <Container color={disabled ? Color.Grey4 : Color.Grey1}>
       <button onClick={disabled ? undefined : () => onClick?.()}>
         <div className="wrap-content">{props.children}</div>
       </button>
@@ -33,7 +33,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
 
-  border: 2px solid ${Color.ButtonBorder};
+  border: 2px solid ${Color.Grey2};
 
   > button {
     width: 100%;
@@ -51,6 +51,6 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     padding: 10px;
-    color: ${(props) => (props.color ? props.color : Color.MainColor)};
+    color: ${(props) => (props.color ? props.color : Color.Grey1)};
   }
 `;

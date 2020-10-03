@@ -1,8 +1,9 @@
 import { TaskEither } from "fp-ts/TaskEither";
 import { DeleteResult } from "typeorm";
-import ogs, { ErrorResult } from "open-graph-scraper";
 
 import { Link } from "../../entities/link";
+
+import { ogs } from "../../util/ogs";
 
 import {
   createDTO,
@@ -13,17 +14,14 @@ import {
 
 import { makeLinkRepositories } from "../../repositories/link";
 import { pipe } from "fp-ts/lib/pipeable";
-import { tryCatch, fold, left } from "fp-ts/lib/TaskEither";
+import { fold, left } from "fp-ts/lib/TaskEither";
 
 export const makeLinkService = () => {
   const repository = makeLinkRepositories();
 
   const create = (dto: createDTO): TaskEither<Error, Link> => {
     return pipe(
-      tryCatch(
-        () => ogs({ url: dto.link }),
-        () => new Error("invalid link")
-      ),
+      ogs(dto.link),
       fold(
         (err: Error) => left(err),
         ({ result }) =>
@@ -47,10 +45,7 @@ export const makeLinkService = () => {
 
   const update = (dto: updateDTO): TaskEither<Error, Link> => {
     return pipe(
-      tryCatch(
-        () => ogs({ url: dto.link }),
-        () => new Error("invalid link")
-      ),
+      ogs(dto.link),
       fold(
         (err: Error) => left(err),
         ({ result }) =>

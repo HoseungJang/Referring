@@ -40,7 +40,7 @@ export const useApiPaginatedQuery = <
         page: after,
       });
 
-      return (request as any).then((response: any) => response);
+      return Promise.resolve(request as any);
     },
     {
       getFetchMore: (last) => last.after ?? false,
@@ -70,7 +70,7 @@ export const useApiMutation = <
   const [mutation, others] = useMutation<R, any, P>((params) => {
     const request = makeMutationApi(axios)[operationId](params as any);
 
-    return (request as any).then((response: any) => response);
+    return Promise.resolve(request as any);
   }, options);
 
   return {

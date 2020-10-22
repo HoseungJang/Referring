@@ -3,11 +3,11 @@ const { NODE_ENV } = process.env;
 module.exports = {
   production: {
     type: "mysql",
-    host: "reffering-mysql",
+    host: "referring-mysql",
     port: 3306,
     username: "root",
     password: "password",
-    database: "reffering",
+    database: "referring",
     synchronize: true,
     entities: ["src/entities/**/*.ts"],
   },
@@ -17,7 +17,7 @@ module.exports = {
     port: 3306,
     username: "root",
     password: "password",
-    database: "reffering",
+    database: "referring",
     synchronize: true,
     entities: ["src/entities/**/*.ts"],
   }

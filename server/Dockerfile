@@ -1,6 +1,6 @@
 FROM node:12.18.4
 
-WORKDIR Reffering
+WORKDIR Referring
 
 COPY . .
 

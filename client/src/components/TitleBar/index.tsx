@@ -13,7 +13,7 @@ export const TitleBar: React.FC = () => {
       <Padding />
       <Container>
         <Link to="/">
-          <Typography.Title>Reffering</Typography.Title>
+          <Typography.Title>Referring</Typography.Title>
         </Link>
       </Container>
     </>

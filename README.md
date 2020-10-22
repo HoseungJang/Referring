@@ -1,15 +1,15 @@
-# Reffering
+# Referring
 
 ## Overview
 
-Reffering, an useful bookmark web application for my own use.
+Referring, an useful bookmark web application for my own use.
 
 This project is based on dockerizing.
 
 ---
 
 # Client
-Reffering client built on [create-react-app](https://github.com/facebook/create-react-app).
+Referring client built on [create-react-app](https://github.com/facebook/create-react-app).
 
 ## Using
 - Typescript
@@ -48,7 +48,7 @@ npm install
 Create a network.
 
 ```
-docker network create reffering-net
+docker network create referring-net
 ```
 
 Pull mysql:5.7 image and then run mysql container
@@ -57,19 +57,19 @@ Pull mysql:5.7 image and then run mysql container
 docker pull mysql:5.7
 ```
 ```
-docker run --network reffering-net --name reffering-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=reffering -d mysql:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+docker run --network referring-net --name referring-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=referring -d mysql:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 ```
 
-Build docker image for reffering server.
+Build docker image for referring server.
 
 ```
-docker build --tag reffering .
+docker build --tag referring .
 ```
 
-Run reffering server container.
+Run referring server container.
 
 ```
-docker run --network reffering-net --name reffering-server -p 3000:3000 -d reffering
+docker run --network referring-net --name referring-server -p 3000:3000 -d referring
 ```
 
 That's it. Now you can access to localhost:3000 for using API.

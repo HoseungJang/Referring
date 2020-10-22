@@ -1,5 +1,5 @@
 {
-  "name": "reffering-client",
+  "name": "referring-client",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",

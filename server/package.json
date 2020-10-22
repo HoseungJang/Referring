@@ -1,5 +1,5 @@
 {
-  "name": "reffering-server",
+  "name": "referring-server",
   "main": "index.ts",
   "scripts": {
     "start": "export NODE_ENV=production && ts-node src/index.ts",
